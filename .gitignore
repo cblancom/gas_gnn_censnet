@@ -1,3 +1,4 @@
 data/
 results/
 scripts/
+gen[0-9]*/
