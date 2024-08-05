@@ -8,8 +8,8 @@ import dill
 
 class InterconnectedEnergySystemOptimizer:
     def __init__(self, data_gas, data_power, T=1, disp=True, seed=42, 
-                 num_approximations=20, weymouth_type='MPCC',
-                 nolineal=True):
+                 num_approximations=20, weymouth_type='lineal',
+                 nolineal=False):
         
         self.data_gas = data_gas
         self.data_power = data_power
@@ -41,13 +41,16 @@ class InterconnectedEnergySystemOptimizer:
     def gas_constraints(self):
         self.gas_balance()
         self.comp_ratio()
-        if self.nolineal:
-            if self.weymouth_type == 'MPCC':
-                self.weymouth_MPCC()
-            elif self.weymouth_type == 'SOC':
-                self.weymouth_SOC()
-            elif self.weymouth_type == 'Taylor':
-                self.weymouth_Taylor()
+        
+        if self.weymouth_type == 'MPCC':
+            self.weymouth_MPCC()
+        elif self.weymouth_type == 'SOC':
+            self.weymouth_SOC()
+        elif self.weymouth_type == 'Taylor':
+            self.weymouth_Taylor()
+        elif self.weymouth_type == 'lineal':
+            print('Lineal')
+    
         self.storage_constraint()
 
     def power_constraints(self):
