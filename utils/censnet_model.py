@@ -72,6 +72,7 @@ class CensNetModel:
         self.seed = seed
         self.Node_size = Node_size
         self.Edge_size = Edge_size
+        self.build_model()
 
     def build_model(self):
         N = Input(shape=(self.Node_size, 5), name="node_features")
