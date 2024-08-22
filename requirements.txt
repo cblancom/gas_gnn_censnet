@@ -17,3 +17,5 @@ pytz
 scipy
 six
 xlsxwriter
+spektral
+tensorflow==2.15.0

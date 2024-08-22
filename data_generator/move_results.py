@@ -2,11 +2,11 @@ import os
 import shutil
 
 
-final_path = "./results_dummy/"
-number_file = 1683
+final_path = "./results/"
+number_file = 0
 folders = sorted(os.listdir("."))
 for folder in folders:
-    if folder.startswith("gen4"):
+    if folder.startswith("gen"):
         files = sorted(os.listdir("./" + folder + "/results_pkl/"))
         for file in files:
             shutil.copy(

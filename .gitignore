@@ -3,6 +3,7 @@ results/
 scripts/
 gen[0-9]*/
 .venv
+venv/
 __pycache__
 Results/
 results_dummy/
