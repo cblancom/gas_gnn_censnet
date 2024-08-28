@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 import tensorflow as tf
 from keras import initializers
@@ -27,6 +28,8 @@ import sys
 import os
 import optuna
 import pandas as pd
+import gc
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.data_loader import data_loader
@@ -165,8 +168,8 @@ def objective(trial):
         training_inputs,
         training_outputs,
         # sample_weight=w_train,
-        verbose=0,
-        epochs=3,
+        verbose=1,
+        epochs=1500,
         batch_size=128,
         # validation_data=(val_inputs,val_outputs,w_val),
         validation_data=(val_inputs, val_outputs),
@@ -195,13 +198,40 @@ def objective(trial):
     ]
     best_model = df[df["val_fw_loss"] == df["val_fw_loss"].min()]
     print(best_model["val_loss"])
+
+    # Clear the TensorFlow session
+    tf.keras.backend.clear_session()
+
+    # Manually trigger garbage collection
+    gc.collect()
+
     return float(best_model["val_loss"])
 
 
-study = optuna.create_study(direction="maximize")
+# Configure TensorFlow to grow GPU memory usage as needed
+gpus = tf.config.experimental.list_physical_devices("GPU")
+if gpus:
+    try:
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+    except RuntimeError as e:
+        print(e)
+
+# Add stream handler of stdout to show the messages
+# optuna.logging.get_logger("optuna").addHandler(logging.StreamHandler(sys.stdout))
+study_name = "linear"  # Unique identifier of the study.
+storage_name = "sqlite:///{}.db".format(study_name)
+study = optuna.create_study(
+    direction="minimize",
+    study_name=study_name,
+    storage=storage_name,
+    load_if_exists=True,
+)
+
+# study = optuna.create_study(direction="maximize")
 study.optimize(
     objective,
-    n_trials=2,
+    n_trials=100,
 )
 
 

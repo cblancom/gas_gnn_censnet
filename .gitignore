@@ -8,3 +8,5 @@ __pycache__
 Results/
 results_dummy/
 results_csv/
+censnet_training/log/*
+
