@@ -112,6 +112,7 @@ lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
 
 
 def objective(trial):
+    tf.keras.backend.clear_session()
     callback_val = tf.keras.callbacks.EarlyStopping(
         monitor="val_loss", patience=5000, restore_best_weights=False, mode="min"
     )
@@ -154,8 +155,8 @@ def objective(trial):
         N_channels=N_channels,
         N_layers=N_layers,
         N_dense=N_dense,
-        Node_size=8,
-        Edge_size=8,
+        Node_size=63,
+        Edge_size=62,
     ).build_model()
 
     mdl.compile(

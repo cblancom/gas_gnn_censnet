@@ -45,8 +45,8 @@ if __name__ == "__main__":
         args.savepath, args.db_path, args.method_folder, args.method
     )
 
-    if os.path.exists(f"{args.db_name}.db"):
-        print(f"Resuming study from {args.db_name}.db")
+    if os.path.exists(f"{args.study_name}.db"):
+        print(f"Resuming study from {args.study_name}.db")
         study = optuna.create_study(
             direction="minimize",
             study_name=args.study_name,
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         )
 
     else:
-        print(f"Starting new study, saving to {args.db_name}.db")
+        print(f"Starting new study, saving to {args.study_name}.db")
         study = optuna.create_study(
             direction="minimize",
             study_name=args.study_name,
