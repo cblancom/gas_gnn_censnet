@@ -130,20 +130,20 @@ class censnet_optuna:
         N_channels = trial.suggest_int("N_channels", 16, 64)
         N_layers = trial.suggest_int("N_layers", 1, 5)
         N_dense = trial.suggest_int("N_dense", 2, 32)
-        fe_loss = trial.suggest_int("fe_loss", 0, 1)
+        # fe_loss = trial.suggest_int("fe_loss", 0, 1)
 
         mdl = CensNetModel(
             N_channels=N_channels,
             N_layers=N_layers,
             N_dense=N_dense,
-            Node_size=63,
-            Edge_size=62,
+            Node_size=8,
+            Edge_size=8,
         ).build_model()
 
         mdl.compile(
             optimizer=tf.keras.optimizers.Adam(learning_rate=lr_schedule),
             loss=["mse", "mse", "mse", "mse", "mse"],  # fw, p, fe, bal, wey
-            loss_weights=[1, 0, fe_loss, 0, 0],
+            loss_weights=[1, 0, 1, 1, 0],
         )
 
         full_history = mdl.fit(
