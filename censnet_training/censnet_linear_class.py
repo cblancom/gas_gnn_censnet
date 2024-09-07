@@ -137,8 +137,8 @@ class censnet_optuna:
             N_channels=N_channels,
             N_layers=N_layers,
             N_dense=N_dense,
-            Node_size=8,
-            Edge_size=8,
+            Node_size=63,
+            Edge_size=62,
         ).build_model()
         print("----------------------------------------------------------------------")
         print(self.weights)
