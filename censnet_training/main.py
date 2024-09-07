@@ -27,6 +27,12 @@ def parse_args():
     parser.add_argument(
         "--study_name", type=str, default="linear", help="Study name for Optuna"
     )
+    parser.add_argument(
+        "--weights",
+        nargs="+",
+        type=int,
+        help="Losses weights: fw, p, f, bal, wei",
+    )
     return parser.parse_args()
 
 
@@ -42,7 +48,7 @@ if __name__ == "__main__":
     args = parse_args()
     storage_name = f"sqlite:///{args.study_name}.db"
     optimizer = censnet_optuna(
-        args.savepath, args.db_path, args.method_folder, args.method
+        args.savepath, args.db_path, args.method_folder, args.method, args.weights
     )
 
     if os.path.exists(f"{args.study_name}.db"):

@@ -22,12 +22,13 @@ class censnet_optuna:
         db_path,
         method_folder,
         method,
+        weights,
     ) -> None:
         self.savepath = savepath
         self.db_path = db_path
         self.method_folder = method_folder
         self.method = method
-
+        self.weights = weights
         self.get_data()
 
     def get_data(
@@ -139,11 +140,12 @@ class censnet_optuna:
             Node_size=8,
             Edge_size=8,
         ).build_model()
-
+        print("----------------------------------------------------------------------")
+        print(self.weights)
         mdl.compile(
             optimizer=tf.keras.optimizers.Adam(learning_rate=lr_schedule),
             loss=["mse", "mse", "mse", "mse", "mse"],  # fw, p, fe, bal, wey
-            loss_weights=[1, 0, 1, 1, 0],
+            loss_weights=self.weights,
         )
 
         full_history = mdl.fit(
