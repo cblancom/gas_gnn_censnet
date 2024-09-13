@@ -17,7 +17,10 @@ def parse_args():
         "--method_folder",
         type=str,
         nargs="+",
-        default=["/Dummy/npy/", "/Col/npy/"],
+        default=["/Dummy/npy/", 
+        "/Col/npy/",
+        "/NL_Dummy/npy/",
+        "NL_Col/npy"],
         help="Method folders",
     )
     parser.add_argument("--method", type=int, default=0, help="Method index")

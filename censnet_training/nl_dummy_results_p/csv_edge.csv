@@ -1,0 +1,2 @@
+epoch,balance_loss,edge_loss,fw_loss,loss,lr,p_loss,val_balance_loss,val_edge_loss,val_fw_loss,val_loss,val_p_loss,val_weymouth_loss,weymouth_loss
+0,521.5631103515625,864.9302978515625,366.211669921875,1231.141845703125,0.009989469,311714.96875,nan,nan,nan,nan,nan,nan,1584041558016.0
